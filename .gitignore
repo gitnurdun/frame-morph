@@ -1,0 +1,27 @@
+# Default-deny: this workspace also contains local projects, private recovery,
+# build toolchains, downloaded libraries, videos, archives and development logs.
+/*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/outputs/
+/outputs/*
+!/outputs/FrameMorph/
+/outputs/FrameMorph/*
+!/outputs/FrameMorph/.clang-format
+!/outputs/FrameMorph/CMakeLists.txt
+!/outputs/FrameMorph/run.sh
+!/outputs/FrameMorph/README.md
+!/outputs/FrameMorph/OPTIONAL-BACKENDS.md
+!/outputs/FrameMorph/PRODUCT.md
+!/outputs/FrameMorph/src/
+!/outputs/FrameMorph/tests/
+!/outputs/FrameMorph/scripts/
+!/outputs/FrameMorph/resources/
+!/outputs/FrameMorph/third-party-licenses/
+**/__pycache__/
+**/*.pyc
+**/.env
+**/.env.*
+**/*.pem
+**/*.key

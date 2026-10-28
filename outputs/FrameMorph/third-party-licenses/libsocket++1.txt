@@ -1,0 +1,34 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Socket++
+Upstream-Contact: Herbert Straub <herbert@linuxhacker.at>
+                  Mathieu Malaterre <mathieu.malaterre@gmail.com>
+Source: https://github.com/malaterre/socketxx-1
+
+Files: *
+Copyright: 1992-1996 Gnanasekaran Swaminathan
+ 2002-2003 Herbert Straub
+License: AS_IS
+ Permission is granted to use at your own risk and distribute this software
+ in source and  binary forms provided the above copyright notice and  this
+ paragraph are  preserved on all copies. This software is provided "as is"
+ with no express or implied warranty.
+Comment:
+ Modification is explicitly added by upstream in an email:
+ > +++
+ > Hi Herbert,
+ >
+ > That was not the intention. It is a free code. You can modify,
+ > copy, and distribute and use it in anyway as you see fit.
+ >
+ > Other people are maintaining it and ported it to different
+ > OSes. Other than that, not much has changed as far as I know.
+ > I haven't looked at it recently.
+ >
+ > -Sekar
+ ref:
+ http://bugs.debian.org/278940#10
+
+Files: debian/*
+Copyright: 2013 Mathieu Malaterre <malat@debian.org>
+License: PD
+ Public Domain

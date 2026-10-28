@@ -1,0 +1,58 @@
+<html><head><title>FrameMorph guide</title></head><body bgcolor="#ffffff" text="#1d293d">
+<a name="start"></a><h1>FrameMorph: compose, explain, animate</h1>
+<p>Build a demonstration like a slide deck. Place images, text, shapes, formulas, graphs, SVG artwork and code on a frame. Use the Properties inspector to edit what you select.</p>
+<h2>A first animation in one minute</h2><ol><li>Draw a Circle from the ribbon. It receives a name such as <b>__circle_1</b>.</li><li>Duplicate the slide. Drag or resize the circle on the copy.</li><li>Click an empty part of the source frame, or its thumbnail. Set <b>Time step to next frame</b> in Frame Properties.</li><li>Press Play. The same name connects the two poses automatically.</li><li>Save the project folder, then Export video.</li></ol>
+<p><b>F1</b> opens this guide. Hover over controls for short notes. Changes are undoable with Ctrl+Z.</p>
+<a name="objects"></a><h1>Objects and frames</h1>
+<p>Click an object for its name, geometry, appearance, effects and updater. Drag its bounding box to move; drag square handles to resize; use the circular handle to rotate. Hold Shift to constrain movement, proportions or rotation. Double-click text or mathematics to reveal its source editor.</p>
+<p>Click the canvas background, a slide thumbnail, or the <b>Frame properties</b> button for frame timing, background, updater generation and the object list. Frame selection returns the timing controls to view.</p>
+<p>Names beginning with <b>__</b> participate in animation. Matching is exact and case sensitive. Ordinary names use the default frame crossfade. Repeated animated names intentionally split or merge. Disconnected pieces inside one selected object remain grouped.</p>
+<p>Shift-click objects or drag a selection rectangle to select several. Drag a selected member or press arrow keys to move the whole selection; Shift+Arrow moves ten pixels. The center buttons center the selection as a group. <b>More...</b> provides left/right/top/bottom edge alignment and equal horizontal/vertical gaps (at least three objects). Handles resize and rotate the active object individually. Each group edit has one Undo step. Group selection combines their geometry. <b>Combine images</b> makes one portable raster object in an overlay, horizontal row, or vertical stack; individual source objects are replaced, and Undo restores them. Bring to front / Send to back and Layer remain in Object Properties.</p>
+<p>Picture inserts PNG/JPG or SVG as an object. Import slides fits PNG/JPG to the canvas as a complete keyframe. For an imported frame, <b>Edit slide image</b> lifts the background into an editable image layer while preserving authored objects. Extracted pixel objects must be edited individually first.</p>
+<a name="effects"></a><h1>Animation effects</h1>
+<p>Construct applies only when an object appears on the next frame. Destruct applies only when it disappears. Matching objects use their ordinary morph or saved updater path instead.</p>
+<table border="1" cellpadding="6"><tr><th>Effect</th><th>Behavior</th></tr><tr><td>Default / Fade</td><td>Opacity changes smoothly.</td></tr><tr><td>None (cut)</td><td>No transition; changes at the end of its scheduled interval.</td></tr><tr><td>Grow / shrink</td><td>Changes size about its center and fades.</td></tr><tr><td>Slide directions</td><td>Moves into or out of the frame in the chosen direction.</td></tr><tr><td>Wipe directions</td><td>Reveals or conceals the original artwork without shrinking it.</td></tr><tr><td>Spin and grow</td><td>A full turn with size and opacity changes.</td></tr><tr><td>Pop</td><td>Overshoots the final size, then settles.</td></tr></table>
+<p><b>Effect starts / ends</b> are percentages of the frame transition; 25 to 75 uses its middle half. Choose Smooth, Linear, Ease in or Ease out. The frame's time step controls the overall duration. Repeated plain names pair existing instances; only extras receive lifecycle effects.</p>
+<a name="updaters"></a><h1>Functions, matrices and updaters</h1>
+<p><b>Map this object now</b> changes the selected object's current geometry. Prefix (x,y): or z: selects the parser. Coordinates are relative to the current object center, X right and Y up, with 100 pixels per unit by default. Use explicit multiplication.</p>
+<pre>(x,y):x+1,y+2
+z:z*exp(i*pi/4)
+(x,y):x+0.3*y,y
+z:z+0.2*z^2</pre>
+<p>An <b>updater</b> specifies the whole trajectory from the original geometry. Save it on each object, then open Frame Properties and press <b>Create next slide from updaters</b>. New and Duplicate never execute saved updater drafts.</p>
+<pre>z:z+2*(exp(i*tau*t)-1)       circle orbit
+z:z*exp(i*tau*t)             full rotation
+z:z+2*i*sin(pi*t)            bounce up
+z:z*(1+0.2*sin(pi*t))        pulse
+(x,y,t):x+t*y,y              shear matrix
+(x,y,t):x+0.3*sin(2*y)*sin(pi*t),y</pre>
+<p>t always runs 0 to 1. <b>duration</b> is the frame time step; <b>seconds=t*duration</b>. A two-second step gives seconds=2*t. The updater must reproduce the original pose at t=0. Changing a committed updater's duration records the next generation's step; regenerate its endpoint to change the saved trajectory.</p>
+<p>Property fields use scene.width, scene.height, scene.origin_x/y, object.x/y/width/height/center_x/center_y. Object maps use scene edges and origin_x/y in local map coordinates; origin is the complex scene center offset. The Variables button lists conventions.</p>
+<a name="latex"></a><h1>LaTeX formula studio</h1>
+<p>Click <b>LaTeX</b> in the ribbon. Choose a template or enter a mathematical fragment, then Preview. Preview runs in the background. Apply adds a named, editable object. Edit content opens its source later. Moving/resizing existing formula artwork does not recompile LaTeX.</p>
+<p><b>Auto</b> tries fast Matplotlib Mathtext and falls back to Full LaTeX. <b>Full LaTeX</b> uses the approved installed TinyTeX/pdflatex and PyMuPDF. It supports amsmath / amssymb notation, matrices, cases and aligned equations. The rendered transparent artwork and original fragment are saved inside the project. Load/save source files directly, and use Fit/Actual pixels/200% to inspect a preview. Ctrl+Enter previews; Alt+Enter applies.</p>
+<pre>\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\begin{bmatrix}1&amp;2\\3&amp;4\end{bmatrix}
+\begin{aligned}f(x)&amp;=x^2\\f'(x)&amp;=2x\end{aligned}
+\begin{cases}x^2&amp;x\geq0\\-x&amp;x&lt;0\end{cases}</pre>
+<p>Enter a formula, not a complete document. Shell escape, file commands and custom preambles/macros are not supported. LaTeX has a 20-second compilation timeout. If a package or command is missing, the error stays in the preview editor. Fast Mathtext remains available without the optional backend.</p>
+<a name="images"></a><h1>Image studio and pixel formulas</h1>
+<p>Select an image and click <b>Edit content</b> or <b>Image filters / pixel formulas</b>. Any selected object can be raster-edited. Crop coordinates refer to original image pixels. Width and Height set the resulting image and canvas-object size. Optionally lock output aspect to the crop, with width driving height. Use ordinary object handles to resize it visually.</p>
+<p>Adjust brightness, contrast, saturation, blur, grayscale, sepia, inversion, sharpen, edges or threshold. Flip horizontally or vertically. Tint preserves image detail; white tint restores the original colours. Every preview starts from the saved original, so repeated previews do not accumulate blur or compression. Reset to original removes the settings. The original pixels and recipe survive save/reopen; Undo restores the previous edit.</p>
+<p>Pixel maps run after the selected filters. Channels r,g,b,a are 0 to 1; x,y are normalized image coordinates from 0 to 1. All output channels read the same pre-map pixel, then clamp to 0..1. Non-finite results are rejected.</p>
+<pre>(r,g,b,a):1-r,1-g,1-b,a         invert
+(r,g,b,a):g,b,r,a               cycle channels
+(r,g,b,a):r,g,b,a*x             alpha gradient
+(r,g,b,a):clamp(1.2*r,0,1),g,b,a
+(r,g,b,a):r*sqrt(x),g,b,a</pre>
+<p>Use min(a,b), max(a,b), pow(a,b), clamp(value,low,high), sin/cos, abs, sqrt, log and exp. Explicit multiplication is required. Processing happens before playback; animation uses the resulting cached artwork.</p>
+<p>To combine images, Shift-select them and choose Overlay, Side by side or Vertical stack in Properties. Alpha is composited in layer order for an overlay. The result is one object that can be resized, filtered, mapped and animated. Images are bounded to 8192 pixels per edge and 16 megapixels for processing/output.</p>
+<a name="code"></a><h1>Source code and SVG</h1>
+<p><b>More... &gt; Source code block</b> opens a code preview editor. Choose Python, C++, JavaScript or plain text, dark/light theme, font size and line numbers. Source text is stored in the project and never executed. Python uses its standard tokenizer; C++/JavaScript use lightweight lexical colouring, not a compiler.</p>
+<p><b>Picture</b> accepts SVG files. <b>More... &gt; SVG artwork</b> accepts source directly. SVG source is embedded and rendered with the approved PyMuPDF backend. Paths, fills, strokes and supported text are rendered into transparent artwork. External file/network resources, scripts and foreignObject are unsupported. Some SVG filters/fonts may differ from a web browser. Raster editing an SVG preserves its source construction for later content edits; re-editing the SVG source reconstructs it and clears raster edits.</p>
+<a name="keys"></a><h1>Shortcuts and troubleshooting</h1>
+<table border="1" cellpadding="6"><tr><td>Ctrl+S / Ctrl+O</td><td>Save / Open</td></tr><tr><td>Ctrl+Z / Ctrl+Y</td><td>Undo / Redo</td></tr><tr><td>Ctrl+C / Ctrl+V</td><td>Copy / Paste</td></tr><tr><td>Ctrl+D</td><td>Duplicate selected object, or focused frame</td></tr><tr><td>Delete / Backspace</td><td>Delete object or focused frame; inputs keep text editing</td></tr><tr><td>Arrow / Shift+Arrow</td><td>Nudge 1 / 10 pixels</td></tr><tr><td>Space / Escape / F1</td><td>Play-pause / Cancel gesture / Help</td></tr></table>
+<p>If nothing moves, check exact names and the __ prefix. A closed orbit needs an updater, because identical keyframes alone do not describe the path. If a contour morph folds, use clearer regions or change the geometry; existing advanced correspondence data is preserved in project JSON.</p>
+<p>Imported flat-background diagrams work best. Photo segmentation, background reconstruction, true 3D, audio and arbitrary Manim scripts are outside this editor. Pixel extraction uses colour tolerance and eight-connectivity; hold Shift to add disconnected pieces or Alt to subtract. Add/erase brushes correct boundaries.</p>
+<p>Save retains portable images, masks, original edited-image pixels, native source and parameters. Autosave recovery is available. Export uses the same CUDA renderer as preview and finalizes MP4 only after successful encoding. Preview speed depends on object count, detail and GPU memory. Unchanged artwork stays in a bounded GPU cache. Transparency coverage agrees with authored keyframes to prevent brightness flashes at the start and end of playback. Optional LaTeX/SVG construction needs the installed helper tools, but reopening/moving/exporting cached artwork does not.</p>
+</body></html>
